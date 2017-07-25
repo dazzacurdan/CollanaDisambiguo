@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/
 # https://learn.adafruit.com/mpr121-capacitive-touch-sensor-on-raspberry-pi-and-beaglebone-black/overview
 # https://github.com/Hemisphere-Project/HPlayer
 
