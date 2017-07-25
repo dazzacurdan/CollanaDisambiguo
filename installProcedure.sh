@@ -3,7 +3,7 @@
 # https://github.com/Hemisphere-Project/HPlayer
 
 sudo apt-get update
-sudo apt-get install build-essential python-dev python-smbus python-pip git
+sudo apt-get install build-essential python-dev python-smbus python-pip git libfreeimage3 -y
 
 sudo pip install python-osc
 
