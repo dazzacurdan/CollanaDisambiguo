@@ -20,11 +20,14 @@
 # THE SOFTWARE.
 import sys
 import time
+import argparse
 
 from pythonosc import osc_message_builder
 from pythonosc import udp_client
 
 import Adafruit_MPR121.MPR121 as MPR121
+
+
 
 def videoPaths(x):
     return {
