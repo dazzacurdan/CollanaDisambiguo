@@ -40,7 +40,7 @@ return {
 	9: '/home/pi/Rovello/09.mp4',
 	10: '/home/pi/Rovello/10.mp4',
 	11: '/home/pi/Rovello/11.mp4',
-}.get(x, 12)    # 9 is default if x not found
+}.get(x, '12')    # 9 is default if x not found
 
 print('Adafruit MPR121 Capacitive Touch Sensor Test')
 
