@@ -27,22 +27,22 @@ from pythonosc import udp_client
 
 import Adafruit_MPR121.MPR121 as MPR121
 
-
+globalVideoPath = '/home/pi/media'
 
 def videoPaths(x):
     return {
-	   0: '/home/pi/Rovello/00.mp4',
-	   1: '/home/pi/Rovello/01.mp4',
-	   2: '/home/pi/Rovello/02.mp4',
-	   3: '/home/pi/Rovello/03.mp4',
-	   4: '/home/pi/Rovello/04.mp4',
-	   5: '/home/pi/Rovello/05.mp4',
-	   6: '/home/pi/Rovello/06.mp4',
-	   7: '/home/pi/Rovello/07.mp4',
-	   8: '/home/pi/Rovello/08.mp4',
-	   9: '/home/pi/Rovello/09.mp4',
-	   10: '/home/pi/Rovello/10.mp4',
-	   11: '/home/pi/Rovello/11.mp4',
+	   0: globalVideoPath+'/00.mp4',
+	   1: globalVideoPath+'/01.mp4',
+	   2: globalVideoPath+'/02.mp4',
+	   3: globalVideoPath+'/03.mp4',
+	   4: globalVideoPath+'/04.mp4',
+	   5: globalVideoPath+'/05.mp4',
+	   6: globalVideoPath+'/06.mp4',
+	   7: globalVideoPath+'/07.mp4',
+	   8: globalVideoPath+'/08.mp4',
+	   9: globalVideoPath+'/09.mp4',
+	   10: globalVideoPath+'/10.mp4',
+	   11: globalVideoPath+'/11.mp4',
     }.get(x, '12')    # 9 is default if x not found
 
 print('Adafruit MPR121 Capacitive Touch Sensor Test')
