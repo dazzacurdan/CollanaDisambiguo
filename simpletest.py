@@ -27,22 +27,22 @@ from pythonosc import udp_client
 
 import Adafruit_MPR121.MPR121 as MPR121
 
-globalVideoPath = '/home/pi/media'
+globalVideoPath = "/home/pi/media"
 
 def videoPaths(x):
     return {
-	   0: globalVideoPath+'/00.mp4',
-	   1: globalVideoPath+'/01.mp4',
-	   2: globalVideoPath+'/02.mp4',
-	   3: globalVideoPath+'/03.mp4',
-	   4: globalVideoPath+'/04.mp4',
-	   5: globalVideoPath+'/05.mp4',
-	   6: globalVideoPath+'/06.mp4',
-	   7: globalVideoPath+'/07.mp4',
-	   8: globalVideoPath+'/08.mp4',
-	   9: globalVideoPath+'/09.mp4',
-	   10: globalVideoPath+'/10.mp4',
-	   11: globalVideoPath+'/11.mp4',
+	   0: globalVideoPath+"/00.mp4",
+	   1: globalVideoPath+"/01.mp4",
+	   2: globalVideoPath+"/02.mp4",
+	   3: globalVideoPath+"/03.mp4",
+	   4: globalVideoPath+"/04.mp4",
+	   5: globalVideoPath+"/05.mp4",
+	   6: globalVideoPath+"/06.mp4",
+	   7: globalVideoPath+"/07.mp4",
+	   8: globalVideoPath+"/08.mp4",
+	   9: globalVideoPath+"/09.mp4",
+	   10: globalVideoPath+"/10.mp4",
+	   11: globalVideoPath+"/11.mp4",
     }.get(x, '12')    # 9 is default if x not found
 
 print('Adafruit MPR121 Capacitive Touch Sensor Test')
@@ -86,7 +86,7 @@ while True:
         if current_touched & pin_bit and not last_touched & pin_bit:
             print('{0} touched!'.format(i))
             path = videoPaths(i)
-            print( '/play ' + path )
+            print( "/play" + path )
             client.send_message("/play", path )
         # Next check if transitioned from touched to not touched.
         if not current_touched & pin_bit and last_touched & pin_bit:
