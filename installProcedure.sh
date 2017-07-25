@@ -13,6 +13,7 @@ if [ ! -d "Adafruit_Python_MPR121" ]; then
     git clone https://github.com/adafruit/Adafruit_Python_MPR121.git
 	cd Adafruit_Python_MPR121
 	sudo python setup.py install
+	cd -
 fi
 
 if [ ! -d "HPlayer" ]; then
