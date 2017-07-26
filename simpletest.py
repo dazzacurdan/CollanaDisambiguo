@@ -29,12 +29,16 @@ from pythonosc import udp_client
 import Adafruit_MPR121.MPR121 as MPR121
 
 globalVideoPath = "/home/pi/media"
+events = 0;
 
-def startMainVideo(threadName, delay):
-    time.sleep(delay)
-    print(threadName+ " finished")
-    activeThread = threading.activeCount()
-    print('Active thread are: {0}'.format(activeThread))
+def startMainVideo():
+    events--
+    if events == 0 :
+        client.send_message("/play", globalVideoPath+"/LOOP-B-made.mp4" )
+    #time.sleep(delay)
+    #print(threadName+ " finished")
+    #activeThread = threading.activeCount()
+    #print('Active thread are: {0}'.format(activeThread))
     #if activeThread = 0:
 
 def videoPaths(x):
@@ -83,8 +87,6 @@ client = udp_client.SimpleUDPClient(args.ip, args.port)
 # Main loop to print a message every time a pin is touched.
 print('Press Ctrl-C to quit.')
 
-client.send_message("/play", globalVideoPath+"/LOOP-B-made.mp4" )
-
 last_touched = cap.touched()
 while True:
     current_touched = cap.touched()
@@ -99,10 +101,12 @@ while True:
             path = videoPaths(i)
             print( "/play " + path )
             client.send_message("/play", path )
-            try:
-                thread.start_new_thread( startMainVideo, (path, 5, ) )
-            except:
-                print ("Error: unable to start thread")
+            t = Timer(5, startMainVideo)
+            t.start()
+            #try:
+            #    thread.start_new_thread( startMainVideo, (path, 5, ) )
+            #except:
+            #    print ("Error: unable to start thread")
         # Next check if transitioned from touched to not touched.
         if not current_touched & pin_bit and last_touched & pin_bit:
             print('{0} released!'.format(i))
