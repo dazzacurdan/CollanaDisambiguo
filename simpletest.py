@@ -30,9 +30,14 @@ import Adafruit_MPR121.MPR121 as MPR121
 
 globalVideoPath = "/home/pi/media"
 events = 0;
+lock = threading.Lock()
 
 def startMainVideo():
-    events -= 1;
+    with lock:
+        events += 1;
+    time.sleep(delay)
+    with lock:   
+        events -= 1;
     if events == 0 :
         client.send_message("/play", globalVideoPath+"/LOOP-B-made.mp4" )
     #time.sleep(delay)
@@ -101,8 +106,8 @@ while True:
             path = videoPaths(i)
             print( "/play " + path )
             client.send_message("/play", path )
-            threading.Timer(5, startMainVideo).start()
-            events += 1
+            threading.start_new_thread( startMainVideo, (path, 5, ) )
+            #threading.Timer(5, startMainVideo).start()
             #try:
             #    thread.start_new_thread( startMainVideo, (path, 5, ) )
             #except:
