@@ -21,6 +21,7 @@
 import sys
 import time
 import argparse
+import thread
 
 from pythonosc import osc_message_builder
 from pythonosc import udp_client
@@ -28,6 +29,13 @@ from pythonosc import udp_client
 import Adafruit_MPR121.MPR121 as MPR121
 
 globalVideoPath = "/home/pi/media"
+
+def startMainVideo(threadName, delay):
+    time.sleep(delay)
+    print(threadName+ " finished")
+    activeThread = threading.activeCount()
+    print('Active thread are: {0}'.format(activeThread))
+    #if activeThread = 0:
 
 def videoPaths(x):
     return {
@@ -91,6 +99,10 @@ while True:
             path = videoPaths(i)
             print( "/play " + path )
             client.send_message("/play", path )
+            try:
+                thread.start_new_thread( startMainVideo, (path, 5, ) )
+            except:
+                print "Error: unable to start thread"
         # Next check if transitioned from touched to not touched.
         if not current_touched & pin_bit and last_touched & pin_bit:
             print('{0} released!'.format(i))
