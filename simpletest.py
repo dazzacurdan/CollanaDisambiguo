@@ -32,7 +32,7 @@ globalVideoPath = "/home/pi/media"
 events = 0;
 
 def startMainVideo():
-    events--
+    events -= 1;
     if events == 0 :
         client.send_message("/play", globalVideoPath+"/LOOP-B-made.mp4" )
     #time.sleep(delay)
@@ -103,6 +103,7 @@ while True:
             client.send_message("/play", path )
             t = Timer(5, startMainVideo)
             t.start()
+            events += 1
             #try:
             #    thread.start_new_thread( startMainVideo, (path, 5, ) )
             #except:
