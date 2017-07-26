@@ -101,8 +101,7 @@ while True:
             path = videoPaths(i)
             print( "/play " + path )
             client.send_message("/play", path )
-            t = Timer(5, startMainVideo)
-            t.start()
+            threading.Timer(5, startMainVideo).start()
             events += 1
             #try:
             #    thread.start_new_thread( startMainVideo, (path, 5, ) )
