@@ -32,7 +32,7 @@ globalVideoPath = "/home/pi/media"
 def videoPaths(x):
     return {
 	   0: globalVideoPath+"/00.mp4",
-	   1: globalVideoPath+"/01.mp4",
+	   1: globalVideoPath+"/20.mp4",
 	   2: globalVideoPath+"/02.mp4",
 	   3: globalVideoPath+"/03.mp4",
 	   4: globalVideoPath+"/04.mp4",
@@ -86,7 +86,7 @@ while True:
         if current_touched & pin_bit and not last_touched & pin_bit:
             print('{0} touched!'.format(i))
             path = videoPaths(i)
-            print( "/play" + path )
+            print( "/play " + path )
             client.send_message("/play", path )
         # Next check if transitioned from touched to not touched.
         if not current_touched & pin_bit and last_touched & pin_bit:
