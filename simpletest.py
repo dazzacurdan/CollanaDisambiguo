@@ -102,7 +102,7 @@ while True:
             try:
                 thread.start_new_thread( startMainVideo, (path, 5, ) )
             except:
-                print "Error: unable to start thread"
+                print ("Error: unable to start thread")
         # Next check if transitioned from touched to not touched.
         if not current_touched & pin_bit and last_touched & pin_bit:
             print('{0} released!'.format(i))
