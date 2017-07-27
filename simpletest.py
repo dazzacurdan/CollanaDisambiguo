@@ -45,7 +45,7 @@ def event_lock_holder(lock,events,delay):
         print("Increase")
         events += 1
     finally:
-        print("Not holding")
+        #print("Not holding")
         lock.release()
         
     time.sleep(delay)
@@ -55,7 +55,7 @@ def event_lock_holder(lock,events,delay):
         print("Decrease")
         events -= 1
     finally:
-        print("Not holding")
+        #print("Not holding")
         lock.release()
         
     if events == 0 :
@@ -66,18 +66,18 @@ def event_lock_holder(lock,events,delay):
 
 def videoPaths(x):
     return {
-       0: [globalVideoPath+"/00.mp4", 10 ],
-       1: [globalVideoPath+"/01.mp4", 10 ],
-       2: [globalVideoPath+"/02.mp4", 10 ],
-       3: [globalVideoPath+"/03.mp4", 10 ],
-       4: [globalVideoPath+"/04.mp4", 10 ],
-       5: [globalVideoPath+"/05.mp4", 10 ],
-       6: [globalVideoPath+"/06.mp4", 10 ],
-       7: [globalVideoPath+"/07.mp4", 10 ],
-       8: [globalVideoPath+"/08.mp4", 10 ],
-       9: [globalVideoPath+"/09.mp4", 10 ],
-       10: [globalVideoPath+"/10.mp4", 10 ],
-       11: [globalVideoPath+"/11.mp4", 10 ]
+       0: [globalVideoPath+"/00.mp4", 60 ],
+       1: [globalVideoPath+"/01.mp4", 60 ],
+       2: [globalVideoPath+"/02.mp4", 60 ],
+       3: [globalVideoPath+"/03.mp4", 60 ],
+       4: [globalVideoPath+"/04.mp4", 60 ],
+       5: [globalVideoPath+"/05.mp4", 60 ],
+       6: [globalVideoPath+"/06.mp4", 60 ],
+       7: [globalVideoPath+"/07.mp4", 60 ],
+       8: [globalVideoPath+"/08.mp4", 60 ],
+       9: [globalVideoPath+"/09.mp4", 60 ],
+       10: [globalVideoPath+"/10.mp4", 60 ],
+       11: [globalVideoPath+"/11.mp4", 43 ]
     }.get(x, [globalVideoPath+"/00.mp4", 10 ])    # 9 is default if x not found
 
 print('Adafruit MPR121 Capacitive Touch Sensor Test')
