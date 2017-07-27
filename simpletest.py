@@ -33,9 +33,9 @@ globalVideoPath = "/home/pi/media"
 events = 0;
 lock = threading.Lock()
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-10s) %(message)s',
-                    )
+#logging.basicConfig(level=logging.DEBUG,
+#                    format='(%(threadName)-10s) %(message)s',
+#                    )
 
 def event_lock_holder(lock,events,delay):
     logging.debug('Starting')
