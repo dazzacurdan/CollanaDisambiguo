@@ -38,27 +38,28 @@ lock = threading.Lock()
 #                    )
 
 def event_lock_holder(lock,events,delay):
-    logging.debug('Starting')
+    print('Starting')
     
     lock.acquire()
     try:
-        logging.debug('Increase')
+        print("Increase")
         events += 1
     finally:
-        logging.debug('Not holding')
+        print("Not holding")
         lock.release()
         
     time.sleep(delay)
     
     lock.acquire()
     try:
-        logging.debug('Decrease')
+        print("Decrease")
         events -= 1
     finally:
-        logging.debug('Not holding')
+        print("Not holding")
         lock.release()
         
     if events == 0 :
+        print("/play "+globalVideoPath+"/LOOP-B-made.mp4")
         client.send_message("/play", globalVideoPath+"/LOOP-B-made.mp4" )
         
     return
