@@ -32,35 +32,51 @@ globalVideoPath = "/home/pi/media"
 events = 0;
 lock = threading.Lock()
 
-def startMainVideo():
-    with lock:
-        events += 1;
+logging.basicConfig(level=logging.DEBUG,
+                    format='(%(threadName)-10s) %(message)s',
+                    )
+
+def event_lock_holder(lock,events,delay):
+    logging.debug('Starting')
+    
+    lock.acquire()
+    try:
+        logging.debug('Increase')
+        events += 1
+    finally:
+        logging.debug('Not holding')
+        lock.release()
+        
     time.sleep(delay)
-    with lock:   
-        events -= 1;
+    
+    lock.acquire()
+    try:
+        logging.debug('Decrease')
+        events -= 1
+    finally:
+        logging.debug('Not holding')
+        lock.release()
+        
     if events == 0 :
         client.send_message("/play", globalVideoPath+"/LOOP-B-made.mp4" )
-    #time.sleep(delay)
-    #print(threadName+ " finished")
-    #activeThread = threading.activeCount()
-    #print('Active thread are: {0}'.format(activeThread))
-    #if activeThread = 0:
+        
+    return
 
 def videoPaths(x):
     return {
-	   0: globalVideoPath+"/00.mp4",
-	   1: globalVideoPath+"/20.mp4",
-	   2: globalVideoPath+"/02.mp4",
-	   3: globalVideoPath+"/03.mp4",
-	   4: globalVideoPath+"/04.mp4",
-	   5: globalVideoPath+"/05.mp4",
-	   6: globalVideoPath+"/06.mp4",
-	   7: globalVideoPath+"/07.mp4",
-	   8: globalVideoPath+"/08.mp4",
-	   9: globalVideoPath+"/09.mp4",
-	   10: globalVideoPath+"/10.mp4",
-	   11: globalVideoPath+"/11.mp4",
-    }.get(x, '12')    # 9 is default if x not found
+       0: [globalVideoPath+"/00.mp4", 10 ],
+       1: [globalVideoPath+"/01.mp4", 10 ],
+       2: [globalVideoPath+"/02.mp4", 10 ],
+       3: [globalVideoPath+"/03.mp4", 10 ],
+       4: [globalVideoPath+"/04.mp4", 10 ],
+       5: [globalVideoPath+"/05.mp4", 10 ],
+       6: [globalVideoPath+"/06.mp4", 10 ],
+       7: [globalVideoPath+"/07.mp4", 10 ],
+       8: [globalVideoPath+"/08.mp4", 10 ],
+       9: [globalVideoPath+"/09.mp4", 10 ],
+       10: [globalVideoPath+"/10.mp4", 10 ],
+       11: [globalVideoPath+"/11.mp4", 10 ]
+    }.get(x, [globalVideoPath+"/00.mp4", 10 ])    # 9 is default if x not found
 
 print('Adafruit MPR121 Capacitive Touch Sensor Test')
 
@@ -92,6 +108,8 @@ client = udp_client.SimpleUDPClient(args.ip, args.port)
 # Main loop to print a message every time a pin is touched.
 print('Press Ctrl-C to quit.')
 
+timer = TimerEvents()
+
 last_touched = cap.touched()
 while True:
     current_touched = cap.touched()
@@ -104,14 +122,10 @@ while True:
         if current_touched & pin_bit and not last_touched & pin_bit:
             print('{0} touched!'.format(i))
             path = videoPaths(i)
-            print( "/play " + path )
-            client.send_message("/play", path )
-            threading.start_new_thread( startMainVideo, (path, 5, ) )
-            #threading.Timer(5, startMainVideo).start()
-            #try:
-            #    thread.start_new_thread( startMainVideo, (path, 5, ) )
-            #except:
-            #    print ("Error: unable to start thread")
+            print( "/play " + path[0] )
+            client.send_message("/play", path[0] )
+            threading.Thread(target=event_lock_holder, args=(lock,events,path[1]), name='eventLockHolder').start()
+            
         # Next check if transitioned from touched to not touched.
         if not current_touched & pin_bit and last_touched & pin_bit:
             print('{0} released!'.format(i))
