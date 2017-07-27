@@ -109,8 +109,6 @@ client = udp_client.SimpleUDPClient(args.ip, args.port)
 # Main loop to print a message every time a pin is touched.
 print('Press Ctrl-C to quit.')
 
-timer = TimerEvents()
-
 last_touched = cap.touched()
 while True:
     current_touched = cap.touched()
