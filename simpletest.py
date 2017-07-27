@@ -22,6 +22,7 @@ import sys
 import time
 import argparse
 import threading
+import logging
 
 from pythonosc import osc_message_builder
 from pythonosc import udp_client
