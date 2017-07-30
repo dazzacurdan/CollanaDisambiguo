@@ -37,8 +37,12 @@ lock = threading.Lock()
 #                    format='(%(threadName)-10s) %(message)s',
 #                    )
 
-def event_lock_holder(lock,events,delay):
+def event_lock_holder(lock,delay):
     print('Starting')
+    print('events is: {0}'.format(events))
+    print('delay is: {0}'.format(delay))    
+    
+    global events
     
     lock.acquire()
     try:
@@ -124,7 +128,7 @@ while True:
             path = videoPaths(i)
             print( "/play " + path[0] )
             client.send_message("/play", path[0] )
-            threading.Thread(target=event_lock_holder, args=(lock,events,path[1]), name='eventLockHolder').start()
+            threading.Thread(target=event_lock_holder, args=(lock,path[1]), name='eventLockHolder').start()
             
         # Next check if transitioned from touched to not touched.
         if not current_touched & pin_bit and last_touched & pin_bit:
