@@ -43,45 +43,38 @@ def event_lock_holder(lock,delay):
     print('delay is: {0}'.format(delay))    
     
     global events
-    
+    th_id = 0
     lock.acquire()
     try:
         print("Increase")
         events += 1
+        th_id = events
     finally:
-        #print("Not holding")
         lock.release()
         
     time.sleep(delay)
-    
-    lock.acquire()
-    try:
-        print("Decrease")
-        events -= 1
-    finally:
-        #print("Not holding")
-        lock.release()
         
-    if events == 0 :
+    if events == th_id :
         print("/play "+globalVideoPath+"/LOOP-B-made.mp4")
         client.send_message("/play", globalVideoPath+"/LOOP-B-made.mp4" )
-        
+    else:
+        print('terminated {0}'.format(th_id))
     return
 
 def videoPaths(x):
     return {
        0: [globalVideoPath+"/00.mp4", 60 ],
-       1: [globalVideoPath+"/01.mp4", 60 ],
+       1: [globalVideoPath+"/01.mp4", 20 ],
        2: [globalVideoPath+"/02.mp4", 60 ],
-       3: [globalVideoPath+"/03.mp4", 60 ],
+       3: [globalVideoPath+"/03.mp4", 20 ],
        4: [globalVideoPath+"/04.mp4", 60 ],
-       5: [globalVideoPath+"/05.mp4", 60 ],
+       5: [globalVideoPath+"/05.mp4", 20 ],
        6: [globalVideoPath+"/06.mp4", 60 ],
-       7: [globalVideoPath+"/07.mp4", 60 ],
+       7: [globalVideoPath+"/07.mp4", 20 ],
        8: [globalVideoPath+"/08.mp4", 60 ],
-       9: [globalVideoPath+"/09.mp4", 60 ],
+       9: [globalVideoPath+"/09.mp4", 20 ],
        10: [globalVideoPath+"/10.mp4", 60 ],
-       11: [globalVideoPath+"/11.mp4", 43 ]
+       11: [globalVideoPath+"/11.mp4", 20 ]
     }.get(x, [globalVideoPath+"/00.mp4", 10 ])    # 9 is default if x not found
 
 print('Adafruit MPR121 Capacitive Touch Sensor Test')
